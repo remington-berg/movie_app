@@ -1,4 +1,6 @@
 { id: @movies.id,
   title: @movies.title,
   year: @movies.year,
-  plot: @movies.plot }
+  plot: @movies.plot,
+  director: @movies.director,
+  english: @movies.english }
