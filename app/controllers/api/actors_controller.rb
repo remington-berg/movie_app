@@ -6,11 +6,15 @@ class Api::ActorsController < ApplicationController
   end
 
   def create
-    @actors = Actor.create({
+    @actors = Actor.new({
       first_name: params["first_name"], last_name: params["last_name"], known_for: params["known_for"], gender: params["gender"],
       age: params["age"],
     })
-    render "show.json.jb"
+    if @actors.save
+      render "show.json.jb"
+    else
+      render json: { error: @actors.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def show
@@ -27,8 +31,11 @@ class Api::ActorsController < ApplicationController
     @actors.known_for = params["known_for"] || @actors.known_for
     @actors.gender = params["gender"] || @actors.gender
     @actors.age = params["age"] || @actors.age
-    @actors.save
-    render "show.json.jb"
+    if @actors.save
+      render "show.json.jb"
+    else
+      render json: { error: @actors.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def destroy

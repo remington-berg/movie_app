@@ -6,10 +6,14 @@ class Api::MoviesController < ApplicationController
   end
 
   def create
-    @movies = Movie.create({
+    @movies = Movie.new({
       title: params["title"], year: params["year"], plot: params["plot"], director: params["director"], english: params["english"],
     })
-    render "show.json.jb"
+    if @movies.save
+      render "show.json.jb"
+    else
+      render json: { error: @movies.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def show
@@ -26,8 +30,11 @@ class Api::MoviesController < ApplicationController
     @movies.plot = params["plot"] || @movies.plot
     @movies.director = params["director"] || @movies.director
     @movies.english = params["english"] || @movies.english
-    @movies.save
-    render "show.json.jb"
+    if @movies.save
+      render "show.json.jb"
+    else
+      render json: { error: @movies.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
   def destroy
