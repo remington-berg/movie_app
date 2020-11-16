@@ -3,4 +3,5 @@
   year: @movies.year,
   plot: @movies.plot,
   director: @movies.director,
-  english: @movies.english }
+  english: @movies.english,
+  genres: @movies.genres }
