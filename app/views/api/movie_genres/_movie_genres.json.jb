@@ -1,0 +1,2 @@
+{ movie: movie_genre.movie.title,
+  genre: movie_genre.genre.name }
